@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porta Retratos Digital</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/static/js/main.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Apartado 1: Imagen Principal -->
+        <div class="image-container">
+            <p id="current-date"></p>
+            <img id="main-image" src="/static/images/default.jpg" alt="Imagen principal">
+        </div>
+
+        <!-- Apartado 2: Hora y Día/Noche -->
+        <div class="time-container">
+            <p id="current-time"></p>
+            <img id="day-night-icon" src="/static/images/sun.png" alt="Día o Noche">
+        </div>
+
+        <!-- Apartado 3: Frase Inspiradora -->
+        <div class="quote-container">
+            <p id="inspirational-quote">"El éxito es la suma de pequeños esfuerzos repetidos día tras día."</p>
+        </div>
+
+        <!-- Apartado 4: Botones -->
+        <div class="buttons-container">
+            <button onclick="window.location.href='/edit-image'">Editar Imagen</button>
+            <button onclick="alert('Noticias en desarrollo')">Noticias</button>
+            <button onclick="alert('Actividades en desarrollo')">Actividades</button>
+            <button onclick="alert('Galería en desarrollo')">Galería</button>
+        </div>
+    </div>
+</body>
+</html>
