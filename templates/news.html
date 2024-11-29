@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias Actuales</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="news-container">
+        <h2>Noticias Actuales</h2>
+        <div id="news-list">
+            <p>Cargando noticias...</p>
+        </div>
+        <button onclick="window.location.href='/'">Regresar a la Pantalla Principal</button>
+    </div>
+    <script>
+        // Cargar noticias simuladas
+        document.addEventListener('DOMContentLoaded', function () {
+            const newsList = document.getElementById('news-list');
+            newsList.innerHTML = `
+                <ul>
+                    <li>Noticia 1: Nuevo avance en inteligencia artificial.</li>
+                    <li>Noticia 2: Cambios climáticos afectan la producción agrícola.</li>
+                    <li>Noticia 3: Últimos resultados de la liga deportiva.</li>
+                </ul>`;
+        });
+    </script>
+</body>
+</html>
