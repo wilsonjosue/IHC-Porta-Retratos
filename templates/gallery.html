@@ -9,13 +9,14 @@
 <body>
     <div class="gallery-container">
         <h2>Galería de Fotos</h2>
-        <div class="gallery">
-            <img src="/static/images/default.jpg" alt="Foto 1">
+        <div id="gallery-container">
+            <!-- Las imágenes de la galería se renderizarán aquí -->
+            <!--<img src="/static/images/default.jpg" alt="Foto 1">-->
         </div>
-        <form id="upload-form" enctype="multipart/form-data" action="/upload" method="POST">
-            <label for="file-upload">Cargar Imagen:</label>
-            <input type="file" id="file-upload" name="file-upload" accept="image/*" required>
-            <button type="submit">Subir Imagen</button>
+        <form id="upload-form">
+            <label for="file-input">Subir Imagen:</label>
+            <input type="file" id="file-input" accept="image/*" required>
+            <button type="submit">Cargar Imagen</button>
         </form>
         <button onclick="window.location.href='/'">Regresar a la Pantalla Principal</button>
     </div>

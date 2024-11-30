@@ -15,7 +15,7 @@ def upload_image():
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     file.save(filepath)
     return redirect(url_for('gallery'))
-
+    
 @app.route('/')
 def main_page():
     return render_template('main.html')

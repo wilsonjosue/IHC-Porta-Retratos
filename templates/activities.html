@@ -8,25 +8,28 @@
 </head>
 <body>
     <div class="activities-container">
-        <h2>Planificador de Actividades</h2>
+        <h2>Gestión de Actividades</h2>
+        
         <form id="activity-form">
-            <label for="activity-name">Actividad:</label>
-            <input type="text" id="activity-name" name="activity-name" required>
-
             <label for="activity-date">Fecha:</label>
-            <input type="date" id="activity-date" name="activity-date" required>
-
+            <input type="date" id="activity-date" required>
             <label for="activity-time">Hora:</label>
-            <input type="time" id="activity-time" name="activity-time" required>
-
-            <button type="submit">Guardar Actividad</button>
+            <input type="time" id="activity-time" required>
+            <label for="activity-description">Descripción:</label>
+            <input type="text" id="activity-description" required>
+            <button type="submit">Agregar Actividad</button>
         </form>
-        <div id="activity-list">
-            <h3>Actividades Programadas:</h3>
-            <ul id="activities"></ul>
+
+        <ul id="activity-list">
+            <!-- Lista de actividades programadas -->
+        </ul>
+
+        <div id="alert-container">
+            <!-- Contenedor para alertas de actividades -->
         </div>
         <button onclick="window.location.href='/'">Regresar a la Pantalla Principal</button>
     </div>
+    <!-- 
     <script>
         document.getElementById('activity-form').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -44,5 +47,6 @@
             e.target.reset();
         });
     </script>
+    -->
 </body>
 </html>

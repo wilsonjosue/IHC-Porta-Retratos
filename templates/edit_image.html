@@ -7,27 +7,40 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <div class="edit-container">
-        <h2>Editar Imagen Principal</h2>
-        <form id="edit-form">
-            <label for="background">Cambiar Fondo:</label>
-            <input type="color" id="background" name="background">
+    <div class="edit-image-container">
+        <h2>Editar Imagen</h2>
 
-            <label for="image-size">Tamaño de Imagen:</label>
-            <input type="range" id="image-size" name="image-size" min="50" max="500">
+        <!-- Selector de fondo -->
+        <label for="background-selector">Seleccionar Fondo:</label>
+        <select id="background-selector">
+            <option value="background1">Fondo 1</option>
+            <option value="background2">Fondo 2</option>
+            <option value="background3">Fondo 3</option>
+        </select>
 
-            <label for="frame">Seleccionar Marco:</label>
-            <select id="frame" name="frame">
-                <option value="none">Ninguno</option>
-                <option value="classic">Clásico</option>
-                <option value="modern">Moderno</option>
-            </select>
+        <!-- Selector de marcos -->
+        <label for="frame-selector">Seleccionar Marco:</label>
+        <select id="frame-selector">
+            <option value="frame1">Marco 1</option>
+            <option value="frame2">Marco 2</option>
+            <option value="frame3">Marco 3</option>
+        </select>
 
-            <label for="stickers">Añadir Stickers:</label>
-            <input type="file" id="stickers" name="stickers" accept="image/*">
+        <!-- Opciones de stickers -->
+        <div class="sticker-options">
+            <h3>Seleccionar Stickers:</h3>
+            <img src="/static/images/stickers/sticker1.png" data-sticker="sticker1.png" class="sticker-option" alt="Sticker 1">
+            <img src="/static/images/stickers/sticker2.png" data-sticker="sticker2.png" class="sticker-option" alt="Sticker 2">
+            <img src="/static/images/stickers/sticker3.png" data-sticker="sticker3.png" class="sticker-option" alt="Sticker 3">
+        </div>
 
-            <button type="submit">Guardar Cambios</button>
-        </form>
+        <!-- Contenedor para los stickers -->
+        <div id="sticker-container" style="position: relative;"></div>
+
+        <!-- Botón para restablecer -->
+        <button id="reset-button">Restablecer</button>
+        <!-- Botón para la pagina principal-->
+        <button onclick="window.location.href='/'">Regresar a la Pantalla Principal</button>
     </div>
 </body>
 </html>
