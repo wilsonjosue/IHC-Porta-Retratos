@@ -1,60 +1,34 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const mainImage = document.getElementById("main-image");
-    const backgroundSelector = document.getElementById("background-selector");
-    const frameSelector = document.getElementById("frame-selector");
-    const stickerContainer = document.getElementById("sticker-container");
-    const stickerOptions = document.querySelectorAll(".sticker-option");
-    const resetButton = document.getElementById("reset-button");
+document.addEventListener('DOMContentLoaded', () => {
+    const saveButton = document.getElementById('save-changes-button');
+    const backgroundSelector = document.getElementById('background-selector');
+    const mainImageSelector = document.getElementById('main-image-selector');
 
-    // Cambiar el fondo de la imagen principal
-    backgroundSelector.addEventListener("change", (event) => {
-        const selectedBackground = event.target.value;
-        const imageContainer = mainImage.parentElement;
-        imageContainer.style.backgroundImage = `url('/static/images/backgrounds/${selectedBackground}.jpg')`;
+    saveButton.addEventListener('click', () => {
+        const background = backgroundSelector.value;
+        const mainImage = mainImageSelector.files[0];
+
+        if (mainImage) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                saveChanges(e.target.result, background);
+            };
+            reader.readAsDataURL(mainImage);
+        } else {
+            saveChanges(null, background);
+        }
     });
 
-    // Añadir un marco alrededor de la imagen principal
-    frameSelector.addEventListener("change", (event) => {
-        const selectedFrame = event.target.value;
-        mainImage.style.borderImageSource = `url('/static/images/frames/${selectedFrame}.png')`;
-        mainImage.style.borderImageSlice = "30"; // Ajusta el marco a la imagen
-        mainImage.style.borderWidth = "15px";
-        mainImage.style.borderStyle = "solid";
-    });
-
-    // Añadir stickers a la imagen principal
-    stickerOptions.forEach((sticker) => {
-        sticker.addEventListener("click", () => {
-            const stickerImage = document.createElement("img");
-            stickerImage.src = `/static/images/stickers/${sticker.dataset.sticker}`;
-            stickerImage.classList.add("sticker");
-            stickerImage.style.position = "absolute";
-            stickerImage.style.left = "50%";
-            stickerImage.style.top = "50%";
-            stickerImage.style.transform = "translate(-50%, -50%)";
-            stickerImage.draggable = true;
-
-            // Hacer el sticker arrastrable
-            stickerImage.addEventListener("dragstart", (e) => {
-                e.dataTransfer.setData("text/plain", null);
-                stickerImage.classList.add("dragging");
-            });
-
-            stickerImage.addEventListener("dragend", () => {
-                stickerImage.classList.remove("dragging");
-            });
-
-            stickerContainer.appendChild(stickerImage);
-        });
-    });
-
-    // Restablecer todas las ediciones
-    resetButton.addEventListener("click", () => {
-        mainImage.style.borderImageSource = "";
-        mainImage.style.borderWidth = "";
-        mainImage.style.borderStyle = "";
-        const imageContainer = mainImage.parentElement;
-        imageContainer.style.backgroundImage = "";
-        stickerContainer.innerHTML = ""; // Eliminar todos los stickers
-    });
+    function saveChanges(mainImage, background) {
+        fetch('/save-image', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ main_image: mainImage, background })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            window.location.href = '/';
+        })
+        .catch(error => console.error('Error:', error));
+    }
 });

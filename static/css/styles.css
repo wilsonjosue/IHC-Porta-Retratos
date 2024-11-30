@@ -1,90 +1,145 @@
-/* Para la pagina principal*/
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-}
+/* Para news, gallery, activities*/
 
+/* Contenedor principal */
 .main-container {
-    width: 80%;
-    height: 90%;
-    display: grid;
-    grid-template-rows: auto auto 1fr auto;
-    gap: 20px;
-    background: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-}
-
-.image-container {
+    width: 1000px;
+    height: auto;
+    background-color: #d9b48f;
+    border: 10px solid #c19a6b;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    overflow: hidden;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.image-container img {
-    max-width: 300px;
-    border: 5px solid #ccc;
+/* Marco principal */
+.frame {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+/* Contenedor 1: Imagen principal e información del tiempo */
+.top-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: #fff;
+    border-bottom: 2px solid #c19a6b;
+}
+
+/* Imagen principal */
+.image-section {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.image-section img {
+    width: 90%;
+    height: 30%;
+    max-height: 300px;
+    max-width: 900px;
+    object-fit: cover;
     border-radius: 10px;
 }
 
-.time-container {
-    text-align: right;
-    font-size: 18px;
+.date-label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
 }
 
-.quote-container {
-    text-align: left;
-    font-size: 16px;
-    font-style: italic;
+/* Información del tiempo */
+.time-section {
+    width: 600px;
+    height:300px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    background-color: #ffe4c4;
+    padding: 10px;
+    border-radius: 5px;
+    height: auto;
+}
+.time-section img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.time-label {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+.weather-icon {
+    width: 50px;
+    height: 50px;
+    margin: 10px 0;
+}
+
+.temperature-label {
+    font-size: 18px;
     color: #555;
 }
 
-.buttons-container {
+/* Contenedor 2: Frase inspiradora */
+.quote-section {
+    width: 100%;
+    height: 20%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-style: italic;
+    font-size: 20px;
+    color: #444;
+    padding: 0px;
+    background-color: #fff8dc;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007BFF;
-    color: white;
+/* Contenedor 3: Botones */
+.buttons-section {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #ffe4c4;
+    padding: 10px;
+}
+
+.button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: none;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #0056b3;
-}
-/* Para news, gallery, activities*/
-.news-container, .activities-container, .gallery-container {
-    max-width: 600px;
-    margin: auto;
-    text-align: center;
+.button img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
 }
 
-form {
-    margin: 20px 0;
+.button span {
+    font-size: 14px;
+    color: #333;
 }
 
-form input, form select, form button {
-    margin: 10px;
-    padding: 10px;
-    width: 90%;
-}
-
-ul {
-    text-align: left;
-    padding: 0;
-    list-style-type: none;
-}
-
-ul li {
-    padding: 5px 0;
-}

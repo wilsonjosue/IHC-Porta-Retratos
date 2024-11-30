@@ -1,8 +1,21 @@
 // Actualizar la hora y cambiar el ícono de día/noche dinámicamente
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const timeElement = document.getElementById("current-time");
     const dayNightIcon = document.getElementById("day-night-icon");
     const currentDateElement = document.getElementById("current-date");
+    const mainImage = document.getElementById("main-image");
+    const imageContainer = mainImage.parentElement;
+
+    // Cargar configuración guardada
+    const loadConfig = async () => {
+        const response = await fetch("/get-config");
+        const config = await response.json();
+
+        mainImage.src = config.main_image;
+        imageContainer.style.backgroundImage = config.background
+            ? `url('${config.background}')`
+            : "none";
+    };
 
     // Actualizar la fecha actual
     const updateDate = () => {
@@ -31,15 +44,16 @@ document.addEventListener("DOMContentLoaded", () => {
         // Cambiar el ícono de día o noche
         const isDay = hours >= 6 && hours < 18; // Día entre las 6:00 y las 18:00
         dayNightIcon.src = isDay
-            ? "/static/images/sun.png" // Ícono de sol
-            : "/static/images/moon.png"; // Ícono de luna
+            ? "/static/images/sol.png" // Ícono de sol
+            : "/static/images/luna.png"; // Ícono de luna
         dayNightIcon.alt = isDay ? "Día" : "Noche";
     };
 
+    // Inicializar página
+    await loadConfig();
     // Actualizar fecha y hora inicialmente
     updateDate();
     updateTimeAndIcon();
-
     // Actualizar cada segundo
     setInterval(updateTimeAndIcon, 1000);
 });

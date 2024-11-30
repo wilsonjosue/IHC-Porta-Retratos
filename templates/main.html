@@ -7,35 +7,52 @@
     <link rel="stylesheet" href="/static/css/styles.css">
     <script src="/static/js/main.js" defer></script>
 </head>
-<body>
+<body style="background-image: url('{{ background }}'); background-size: cover;">
     <div class="main-container">
-        <!-- Apartado 1: Imagen Principal -->
-        <div class="image-container">
-            <p id="current-date"></p>
-            <img id="main-image" src="/static/images/default.jpg" alt="Imagen principal">
-        </div>
+        <!-- Marco principal -->
+        <div class="frame">
+            <!-- Contenedor 1: Imagen principal e información del tiempo -->
+            <div class="top-section">
+                <!-- Imagen Principal -->
+                <div class="image-section">
+                    <p id="current-date" class="date-label">Lunes 18/11/2024</p>
+                    <img id="main-image" src="{{ main_image }}" alt="Imagen principal">
+                </div>
+                
+                <!-- Información del Tiempo -->
+                <div class="time-section">
+                    <p id="current-time" class="time-label">11:00</p>
+                    <img id="day-night-icon" src="/static/images/sun.png" alt="Día o Noche" class="weather-icon">
+                    <p class="temperature-label">31 grados</p>
+                </div>
+            </div>
 
-        <!-- Apartado 2: Hora y Día/Noche -->
-        <div class="time-container">
-            <p id="current-time"></p>
-            <img id="day-night-icon" src="/static/images/sun.png" alt="Día o Noche">
-        </div>
+            <!-- Contenedor 2: Frase inspiradora -->
+            <div class="quote-section">
+                <p id="inspirational-quote" class="quote-text">
+                    "Lo más difícil es la decisión de actuar: el resto es mera tenacidad". - Amelia Earhart
+                </p>
+            </div>
 
-        <!-- Apartado 3: Frase Inspiradora -->
-        <div class="quote-container">
-            <p id="inspirational-quote">"El éxito es la suma de pequeños esfuerzos repetidos día tras día."</p>
-        </div>
-
-        <!-- Apartado 4: Botones -->
-        <div class="buttons-container">
-            <!-- Botón 1: Editar Imagen -->
-            <button onclick="window.location.href='/edit-image'">Editar Imagen</button>
-            <!-- Botón 2: Noticias -->
-            <button onclick="window.location.href='/news'">Noticias</button>
-            <!-- Botón 3: Actividades -->
-            <button onclick="window.location.href='/activities'">Actividades</button>
-            <!-- Botón 4: Galería -->
-            <button onclick="window.location.href='/gallery'">Galería</button>
+            <!-- Contenedor 3: Botones -->
+            <div class="buttons-section">
+                <button class="button" onclick="window.location.href='/edit-image'">
+                    <img src="/static/icons/edit.png" alt="Editar">
+                    <span>Modificar</span>
+                </button>
+                <button class="button" onclick="window.location.href='/news'">
+                    <img src="/static/icons/news.png" alt="Noticias">
+                    <span>Noticias</span>
+                </button>
+                <button class="button" onclick="window.location.href='/activities'">
+                    <img src="/static/icons/activities.png" alt="Actividades">
+                    <span>Actividades</span>
+                </button>
+                <button class="button" onclick="window.location.href='/gallery'">
+                    <img src="/static/icons/gallery.png" alt="Galería">
+                    <span>Más Imágenes</span>
+                </button>
+            </div>
         </div>
     </div>
 </body>
