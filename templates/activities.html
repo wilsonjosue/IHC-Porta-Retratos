@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planificador de Actividades</title>
     <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/static/js/activities.js" defer></script>
 </head>
 <body>
     <div class="activities-container">
@@ -29,24 +30,6 @@
         </div>
         <button onclick="window.location.href='/'">Regresar a la Pantalla Principal</button>
     </div>
-    <!-- 
-    <script>
-        document.getElementById('activity-form').addEventListener('submit', function (e) {
-            e.preventDefault();
 
-            const activityName = document.getElementById('activity-name').value;
-            const activityDate = document.getElementById('activity-date').value;
-            const activityTime = document.getElementById('activity-time').value;
-
-            const activitiesList = document.getElementById('activities');
-            const listItem = document.createElement('li');
-            listItem.innerText = `${activityName} - ${activityDate} ${activityTime}`;
-            activitiesList.appendChild(listItem);
-
-            // Limpiar el formulario
-            e.target.reset();
-        });
-    </script>
-    -->
 </body>
 </html>

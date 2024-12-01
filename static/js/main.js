@@ -6,6 +6,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const mainImage = document.getElementById("main-image");
     const imageContainer = mainImage.parentElement;
 
+     
+    // Verificar si los elementos existen
+    if (!timeElement || !dayNightIcon || !currentDateElement) {
+        console.error("Elementos necesarios no encontrados en el DOM.");
+        return;
+    }
+
     // Cargar configuración guardada
     const loadConfig = async () => {
         const response = await fetch("/get-config");
@@ -48,12 +55,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             : "/static/images/luna.png"; // Ícono de luna
         dayNightIcon.alt = isDay ? "Día" : "Noche";
     };
-
-    // Inicializar página
-    await loadConfig();
+    
     // Actualizar fecha y hora inicialmente
     updateDate();
     updateTimeAndIcon();
     // Actualizar cada segundo
     setInterval(updateTimeAndIcon, 1000);
+    // Inicializar página
+    await loadConfig();
+    
 });

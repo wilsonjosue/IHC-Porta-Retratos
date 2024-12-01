@@ -3,28 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noticias Actuales</title>
+    <title>Noticias de The Wall Street Journal</title>
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <div class="news-container">
-        <h2>Noticias Actuales</h2>
-        <div id="news-list">
-            <p>Cargando noticias...</p>
-        </div>
+        <h1>Últimas Noticias del Wall Street Journal</h1>
+        {% if articles %}
+            <ul class="news-list">
+                {% for article in articles %}
+                <li class="news-item">
+                    <h2>{{ article.title }}</h2>
+                    {% if article.urlToImage %}
+                        <img src="{{ article.urlToImage }}" alt="Imagen de la noticia" class="news-image">
+                    {% endif %}
+                    <p>{{ article.description }}</p>
+                    <p><strong>Autor:</strong> {{ article.author or "Desconocido" }}</p>
+                    <a href="{{ article.url }}" target="_blank">Leer más</a>
+                    <p><small>Publicado en: {{ article.publishedAt }}</small></p>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay noticias disponibles en este momento.</p>
+        {% endif %}
+        
         <button onclick="window.location.href='/'">Regresar a la Pantalla Principal</button>
     </div>
-    <script>
-        // Cargar noticias simuladas
-        document.addEventListener('DOMContentLoaded', function () {
-            const newsList = document.getElementById('news-list');
-            newsList.innerHTML = `
-                <ul>
-                    <li>Noticia 1: Nuevo avance en inteligencia artificial.</li>
-                    <li>Noticia 2: Cambios climáticos afectan la producción agrícola.</li>
-                    <li>Noticia 3: Últimos resultados de la liga deportiva.</li>
-                </ul>`;
-        });
-    </script>
+
 </body>
 </html>
