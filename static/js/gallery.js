@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Lista de imágenes en la galería
     const galleryImages = [
-        "/static/images/imagen2.jpg", // Imagen predeterminada
-        "/static/images/imagen3.jpg",
-        "/static/images/imagen4.jpg",
+        "/static/images/uploads/imagen2.jpg", // Imagen predeterminada
+        "/static/images/uploads/imagen3.jpg",
+        "/static/images/uploads/imagen4.jpg",
     ];
 
     // Renderiza la galería de imágenes

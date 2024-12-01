@@ -6,13 +6,13 @@ import json
 app = Flask(__name__)
 
 STATE_FILE = os.path.join('data', 'state.json')
-
+#--------------------------------------------------------
 # Función para cargar el estado
 def load_state():
     if os.path.exists(STATE_FILE):
         with open(STATE_FILE, 'r') as f:
             return json.load(f)
-    return {"main_image": "/static/images/imagen6.jpg", "background": ""}
+    return {"main_image": "/static/images/imagen6.jpg", "background": "/static/images/backgrounds/fnd1.jpg"}
 
 # Función para guardar el estado
 def save_state(data):
@@ -39,11 +39,11 @@ def save_image():
 
     return jsonify({"message": "Configuración guardada correctamente"})
 
-
 @app.route('/')
 def main_page():
     state = load_state() # Función que devuelve el estado, incluyendo "main_image"
     return render_template('main.html', main_image=state["main_image"],background=state["background"])
+#--------------------------------------------------------
 
 if __name__ == '__main__':
     app.run(debug=True)

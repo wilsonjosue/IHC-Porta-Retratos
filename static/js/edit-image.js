@@ -31,4 +31,5 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error:', error));
     }
+    // Añadir stickers a la imagen principal
 });
