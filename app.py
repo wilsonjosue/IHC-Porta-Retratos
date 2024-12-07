@@ -1,13 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for
-from flask import jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import os
 import json
 import requests #para la API de noticias
-from datetime import datetime #para las actividades
+from datetime import datetime 
+from flask_sqlalchemy import SQLAlchemy # para la base de datos actividades
 
 app = Flask(__name__) 
 
-#--------------------------------------------------------
+#---------------------EDIT_IMAGE-----------------------------
 STATE_FILE = os.path.join('data', 'state.json')
 
 # Función para cargar el estado
@@ -42,7 +42,7 @@ def save_image():
 
     return jsonify({"message": "Configuración guardada correctamente"})
 
-#--------------------------------------------------------
+#----------------------NEWS-------------------------
 #para la API de noticias :https://newsapi.org/
 
 API_KEY = 'bd44f49d78ae4e709a71bb3254ca9bea'
@@ -67,12 +67,72 @@ def show_news():
     
     # Renderizar la plantilla con los artículos
     return render_template('news.html', articles=articles)
-#--------------------------------------------------------
-# Actividades
-ACTIVITIES_FILE = os.path.join('data', 'activities.json')
+
+#-----------------------ACTIVITIES---------------------------
+# Configurar la aplicación Flask y la base de datos
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///activities.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Crear la instancia de SQLAlchemy
+db = SQLAlchemy(app)
+# Definir el modelo para las actividades
+
+class Activity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(10), nullable=False)  # Fecha (YYYY-MM-DD)
+    time = db.Column(db.String(5), nullable=False)   # Hora (HH:MM)
+    description = db.Column(db.String(255), nullable=False)  # Descripción
+
+# Crear las tablas en la base de datos
+#with app.app_context():
+#    db.create_all()
+# Ruta para mostrar actividades y formulario
+@app.route('/activities', methods=['GET'])
+def activities_page():
+    activities = Activity.query.all()
+    return render_template('activities.html', activities=activities)
+
+# Ruta para agregra actividades 
+@app.route('/add-activity', methods=['POST'])
+def add_activity():
+    data = request.json
+    new_activity = Activity(
+        date=data['date'],
+        time=data['time'],
+        description=data['description']
+    )
+    db.session.add(new_activity)
+    db.session.commit()
+    return jsonify({"message": "Actividad agregada exitosamente"})
+
+#Ruta para eliminar actividades
+@app.route('/delete-activity/<int:activity_id>', methods=['DELETE'])
+def delete_activity(activity_id):
+    activity = Activity.query.get(activity_id)
+    if activity:
+        db.session.delete(activity)
+        db.session.commit()
+        return jsonify({"message": "Actividad eliminada exitosamente"})
+    return jsonify({"message": "Actividad no encontrada"}), 404
+
+# Ruta para verificar actividades pendientes
+@app.route('/check-activities', methods=['GET'])
+def check_activities():
+    now = datetime.now()
+    current_date = now.strftime('%Y-%m-%d')
+    current_time = now.strftime('%H:%M')
+
+    # Buscar actividades que coincidan con la fecha y hora actuales
+    activities = Activity.query.filter_by(date=current_date, time=current_time).all()
+
+    # Si hay actividades coincidentes, devolver sus descripciones
+    if activities:
+        alerts = [{"id": activity.id, "description": activity.description} for activity in activities]
+        return jsonify({"alerts": alerts})
+    return jsonify({"alerts": []})
 
 # -------------------------------------------------------
-# Rutas principales
+# Rutas principal main
 @app.route('/')
 def main_page():
     state = load_state() # Función que devuelve el estado, incluyendo "main_image"

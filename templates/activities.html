@@ -20,14 +20,21 @@
             <input type="text" id="activity-description" required>
             <button type="submit">Agregar Actividad</button>
         </form>
-
+        
+        <!-- Mostrar y gestionar actividades dinámicamente.-->
         <ul id="activity-list">
-            <!-- Lista de actividades programadas -->
+            {% for activity in activities %}
+            <li>
+                <span>{{ activity.date }} {{ activity.time }} - {{ activity.description }}</span>
+                <button class="delete-btn" data-id="{{ activity.id }}">Eliminar</button>
+            </li>
+            {% endfor %}
         </ul>
 
-        <div id="alert-container">
-            <!-- Contenedor para alertas de actividades -->
+        <div id="alert-container" class="alert-container">
+            <!-- Las alertas dinámicas aparecerán aquí -->
         </div>
+        
         <button onclick="window.location.href='/'">Regresar a la Pantalla Principal</button>
     </div>
 

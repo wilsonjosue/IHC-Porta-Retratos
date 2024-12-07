@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const currentDateElement = document.getElementById("current-date");
     const mainImage = document.getElementById("main-image");
     const imageContainer = mainImage.parentElement;
-
+    const alertContainer = document.getElementById("alert-container");
      
     // Verificar si los elementos existen
     if (!timeElement || !dayNightIcon || !currentDateElement) {
@@ -55,6 +55,39 @@ document.addEventListener("DOMContentLoaded", async () => {
             : "/static/images/luna.png"; // Ícono de luna
         dayNightIcon.alt = isDay ? "Día" : "Noche";
     };
+
+    // Función para verificar alertas
+    const checkForAlerts =  async () => {
+        try {
+            const response = await fetch('/check-activities');
+            const result =  await response.json();
+
+            // Limpiar alertas previas
+            alertContainer.innerHTML = "";
+
+            if (result.alerts.length > 0) {
+                result.alerts.forEach((alert) => {
+                    const alertMessage = document.createElement("div");
+                    alertMessage.className = "alert";
+                    alertMessage.textContent = `¡Alerta! Actividad programada: ${alert.description}`;
+                    alertContainer.appendChild(alertMessage);
+
+                    // Opcional: Eliminar alerta después de un tiempo
+                    setTimeout(() => {
+                        alertMessage.remove();
+                    }, 10000); // 10 segundos
+                });
+            }
+        } catch (error) {
+            console.error("Error al verificar actividades:", error);
+        }
+    };
+
+    // Ejecutar la verificación inicialmente
+    checkForAlerts();
+
+    // Configurar para ejecutarse cada minuto
+    setInterval(checkForAlerts, 60000);
     
     // Actualizar fecha y hora inicialmente
     updateDate();
