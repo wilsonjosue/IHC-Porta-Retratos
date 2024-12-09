@@ -84,8 +84,8 @@ class Activity(db.Model):
     description = db.Column(db.String(255), nullable=False)  # Descripción
 
 # Crear las tablas en la base de datos
-#with app.app_context():
-#    db.create_all()
+with app.app_context():
+    db.create_all()
 # Ruta para mostrar actividades y formulario
 @app.route('/activities', methods=['GET'])
 def activities_page():
