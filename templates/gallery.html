@@ -6,15 +6,18 @@
     <title>Galería de Fotos</title>
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
-<body>
+<body id="gallery-page">
     <div class="gallery-container">
         <h2>Galería de Fotos</h2>
         <div id="gallery-container">
-            <!-- Las imágenes de la galería se renderizarán aquí -->
-            <!--<img src="/static/images/default.jpg" alt="Foto 1">-->
+            {% for image in images %}
+            <img src="{{ image.image_path }}" alt="Imagen de la galería">
+            {% endfor %}
         </div>
-        <form id="upload-form">
-            
+        <form id="upload-form" action="/upload-image" method="POST" enctype="multipart/form-data">
+            <label for="image">Subir nueva imagen:</label>
+            <input type="file" name="image" id="image" accept="image/*" required>
+            <button type="submit">Subir Imagen</button>
         </form>
         <button onclick="window.location.href='/'">Regresar a la Pantalla Principal</button>
     </div>

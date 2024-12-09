@@ -4,7 +4,7 @@ import json
 import requests #para la API de noticias
 from datetime import datetime 
 from flask_sqlalchemy import SQLAlchemy # para la base de datos actividades
-
+from werkzeug.utils import secure_filename # para gallery
 app = Flask(__name__) 
 
 #---------------------EDIT_IMAGE-----------------------------
@@ -84,8 +84,8 @@ class Activity(db.Model):
     description = db.Column(db.String(255), nullable=False)  # Descripción
 
 # Crear las tablas en la base de datos
-with app.app_context():
-    db.create_all()
+#with app.app_context():
+#    db.create_all()
 # Ruta para mostrar actividades y formulario
 @app.route('/activities', methods=['GET'])
 def activities_page():
@@ -130,6 +130,55 @@ def check_activities():
         alerts = [{"id": activity.id, "description": activity.description} for activity in activities]
         return jsonify({"alerts": alerts})
     return jsonify({"alerts": []})
+
+# --------------------GALLERY----------------------------
+# db = SQLAlchemy(app) ya fue creada
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gallery.db' ya se guarda en activities.db
+
+# Modelo para la galería
+# Añadir el modelo de la galería a la configuración existente
+class GalleryImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    image_path = db.Column(db.String(255), nullable=False)  # Ruta del archivo de imagen
+
+#Crear la tabla en la base de datos
+with app.app_context():
+    db.create_all()
+
+# Directorio para guardar las imágenes
+UPLOAD_FOLDER = 'static/uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Ruta para renderizar la galería
+@app.route('/gallery', methods=['GET'])
+def gallery_page():
+    images = GalleryImage.query.all()  # Obtener todas las imágenes de la base de datos
+    return render_template('gallery.html', images=images)
+
+# Ruta para subir imágenes
+@app.route('/upload-image', methods=['POST'])
+def upload_image():
+    if 'image' not in request.files:
+        return jsonify({"message": "No se seleccionó ninguna imagen"}), 400
+
+    image = request.files['image']
+    if image.filename == '':
+        return jsonify({"message": "Nombre de archivo vacío"}), 400
+
+    # Guardar la imagen de forma segura
+    filename = secure_filename(image.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    image.save(file_path)
+
+    # Guardar la referencia en la base de datos
+    new_image = GalleryImage(image_path=file_path)
+    db.session.add(new_image)
+    db.session.commit()
+
+    return jsonify({"message": "Imagen subida exitosamente", "image_path": file_path})
+
+#----------------------Para la frase dinamica------------------------
 
 # -------------------------------------------------------
 # Rutas principal main
