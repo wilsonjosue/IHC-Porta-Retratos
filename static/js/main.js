@@ -51,8 +51,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Cambiar el ícono de día o noche
         const isDay = hours >= 6 && hours < 18; // Día entre las 6:00 y las 18:00
         dayNightIcon.src = isDay
-            ? "/static/images/sol.png" // Ícono de sol
-            : "/static/images/luna.png"; // Ícono de luna
+            ? "/static/images/fotos/sol.png" // Ícono de sol
+            : "/static/images/fotos/luna.png"; // Ícono de luna
         dayNightIcon.alt = isDay ? "Día" : "Noche";
     };
 

@@ -15,7 +15,7 @@ def load_state():
     if os.path.exists(STATE_FILE):
         with open(STATE_FILE, 'r') as f:
             return json.load(f)
-    return {"main_image": "/static/images/imagen6.jpg", "background": "/static/images/backgrounds/fnd1.jpg"}
+    return {"main_image": "/static/images/fotos/imagen6.jpg", "background": "/static/images/backgrounds/fnd1.jpg"}
 
 # Función para guardar el estado
 def save_state(data):
@@ -83,10 +83,6 @@ class Activity(db.Model):
     time = db.Column(db.String(5), nullable=False)   # Hora (HH:MM)
     description = db.Column(db.String(255), nullable=False)  # Descripción
 
-# Crear las tablas en la base de datos
-#with app.app_context():
-#    db.create_all()
-# Ruta para mostrar actividades y formulario
 @app.route('/activities', methods=['GET'])
 def activities_page():
     activities = Activity.query.all()
@@ -133,9 +129,8 @@ def check_activities():
 
 # --------------------GALLERY----------------------------
 # db = SQLAlchemy(app) ya fue creada
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gallery.db' ya se guarda en activities.db
-
 # Modelo para la galería
+
 # Añadir el modelo de la galería a la configuración existente
 class GalleryImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -176,20 +171,25 @@ def upload_image():
     db.session.add(new_image)
     db.session.commit()
 
-    return jsonify({"message": "Imagen subida exitosamente", "image_path": file_path})
+    #return jsonify({"message": "Imagen subida exitosamente", "image_path": file_path})
+    return redirect(url_for('gallery_page'))
 
 #----------------------Para la frase dinamica------------------------
 
 # -------------------------------------------------------
 # Rutas principal main
-@app.route('/')
+@app.route('/main')
 def main_page():
     state = load_state() # Función que devuelve el estado, incluyendo "main_image"
     # Enviamos las actividades como JSON
     return render_template('main.html', 
                            main_image=state["main_image"],
                            background=state["background"],)
-# -------------------------------------------------------
+# --------------------------Direcciona a home.html-------------------------
+
+@app.route('/')
+def home_page():
+    return render_template('home.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
